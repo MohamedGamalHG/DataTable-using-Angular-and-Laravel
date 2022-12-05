@@ -11,15 +11,12 @@
 
 <div class="container mt-5">
     <h2>All Category</h2>
-    <table id="datatable" class="table table-bordered">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-    </table>
+    <form action="{{route('category.update')}}" method="post">
+        <input type="hidden" name="id" value="{{$cat->id}}">
+        <label>Name</label><br>
+        <input type="text" class="form-control" value="{{$cat->name}}"><br>
+        <input type="submit" class="btn btn-primary">
+    </form>
 
 </div>
 
@@ -31,31 +28,8 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function (){
-        $('#datatable').DataTable({
-            "processing":true,
-            "serverSide":true,
-            "ajax":"{{route('category.index')}}",
-            columns: [
-                {data: 'DT_RowIndex', name: 'id'},
-                {data: 'name', name: 'name'}, // we uisng name:'name' to tell the ajax to search on table called name in database
-                {
-                    data: 'action',
-                    //name: 'action',
-                    //orderable: true,
-                   // searchable: true
-                },
-            ]
-            // "columns":[
-            //     {"data":"id",
-            //         "defualtcontent":"-"
+        $.ajax({
 
-            //     },
-            //     {
-            //         "data":"action",
-            //         "name":"id",
-            //         "deafultcontent":"-"
-            //     {"data":"name"}
-            // ]
         })
     })
 </script>

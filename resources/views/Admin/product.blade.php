@@ -10,13 +10,14 @@
 <body>
 
 <div class="container mt-5">
-    <h2>All Category</h2>
+    <h2>All Product</h2>
     <table id="datatable" class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>
             <th>title</th>
             <th>price</th>
+            <th>Action</th>
         </tr>
         </thead>
     </table>
@@ -31,15 +32,21 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function (){
-        var i=1;
         $('#datatable').DataTable({
             "processing":true,
             "serverSide":true,
-            "ajax":"{{route('product.getdata')}}",
+            "ajax":"{{route('product.index')}}",
             "columns":[
-                {"data":"id"},
-                {"data":"title"},
-                {"data":"price"}
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data:"Title",title:'Title'},
+                {data:"price",price:'price'},
+                {data: 'contractor', name: 'contractor'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
+                    searchable: true
+                },
             ]
         })
     })

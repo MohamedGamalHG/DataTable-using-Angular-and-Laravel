@@ -1,9 +1,5 @@
 <?php
-
-
 namespace App\Http\Controllers;
-
-
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,38 +7,42 @@ use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
-
     public function index()
     {
-
-        return view('Admin.product');
-
+        return Product::select("id",'title','price','details')->get();
     }
 
-    public function getData()
+
+    public function store(Request $request)
     {
-        $product = Product::select('id','title','price');
-        return DataTables::of($product)->addIndexColumn()->make(true);
+       Product::create($request->post());
+       return response()->json([
+            'message' => 'item added'
+       ]);
     }
 
-
-    public function getStudents(Request $request)
+    public function show(Product $product)
     {
-
-        if ($request->ajax()) {
-            $data = User::latest()->get();
-
-            return Datatables::of($data)
-                ->addIndexColumn()
-
-           ->addColumn('action', function($row){
-                $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                return $actionBtn;
-            })
-
-            ->rawColumns(['action'])
-                ->make(true);
-        }
+        return response()->json([
+            'product'  => $product
+        ]);
     }
+
+    public function update(Request $request,Product $product)
+    {
+        $product->fill($request->post())->update();
+       return response()->json([
+            'message' => 'item added'
+       ]);
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+       return response()->json([
+            'message' => 'item delete'
+       ]);
+    }
+
 
 }
